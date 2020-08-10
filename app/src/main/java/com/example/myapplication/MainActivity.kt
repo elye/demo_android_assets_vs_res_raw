@@ -65,21 +65,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    @Throws(IOException::class)
-    private fun readFileFromResources(inputStream: InputStream?): String {
-        val byteStream = ByteArrayOutputStream()
-        try {
-            var nextValue = inputStream?.read() ?: -1
-
-            while ( nextValue != -1 ) {
-                byteStream.write(nextValue)
-                nextValue = inputStream?.read() ?: -1
-            }
-            return String(byteStream.toByteArray())
-
-        } finally {
-            inputStream?.close()
-            byteStream.close()
-        }
+    private fun readFileFromResources(inputStream: InputStream): String {
+        return inputStream.bufferedReader().use { it.readText() }
     }
 }
